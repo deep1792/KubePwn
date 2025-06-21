@@ -36,7 +36,7 @@ Kubepwn provides:
 | Insecure File Upload                  | '/upload'              | Upload and access arbitrary files               |
 | Privilege Escalation                  | '/priv-esc'            | Escalate using mounted Docker/Containerd socket |
 
-📦 File Structure
+### 📦 File Structure
       Kubepwn/
       ├── app.py # Flask web application
       ├── deploy.py # Deployment helper (optional)
