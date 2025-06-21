@@ -34,12 +34,10 @@ Kubepwn provides:
 | **Server-Side Template Injection**        | `/template`          | Exploit Jinja2 to run code via unsanitized user template input.              |
 | **Server-Side Request Forgery (SSRF)**    | `/ssrf?url=...`      | Trigger backend server to request arbitrary internal/external URLs.          |
 | **Insecure File Upload**                  | `/upload`            | Upload arbitrary files without validation, enabling script/webshell attacks. |
-| **LLM Prompt Injection**                  | `/chatbot`           | Simulate prompt injection by manipulating chatbot instructions.              |
 | **Sensitive Keys in Codebase**            | `/secrets`           | Exposes hardcoded secrets via insecure Python import (`secretdata.creds`).   |
 | **Reverse Shell + Privilege Escalation**  | `/rce` with payload  | Obtain a reverse shell and escalate privileges using                         |
-| **Insecure File Download**                | `/download?file=...` | Path traversal via unsanitized download requests (`send_file` abuse).        |
-| **Open Redirect**                         | `/redirect?url=...`  | Redirects user to unvalidated external links (phishing/social engineering).  |
 | **Kubernetes Enumeration (Post-Exploit)** | via reverse shell    | Enumerate container/host/K8s environment to pivot or escalate access.        |
+| **Full Kubernetes compromise**            | via reverse shell    | compromise the full compromise after privilege escalation                    |
 
 
 ### 📦 File Structure
