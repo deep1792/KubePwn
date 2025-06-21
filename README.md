@@ -112,7 +112,7 @@ Kubepwn is intentionally insecure and must only be used in isolated, local envir
 
  👨‍💻 Author
 Created with ❤️ by Deepanshu Khanna
-🔗 [LinkedIn](https://www.linkedin.com/in/deepanshu-khanna/) • 🛡️ Security Researcher
+🔗 [LinkedIn](https://www.linkedin.com/in/deepanshukhanna/) • 🛡️ Security Researcher
 
  📝 License
 This project is licensed under the [MIT License](LICENSE).
