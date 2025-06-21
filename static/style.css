@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+body {
+  background: radial-gradient(ellipse at top, #0c0c0e 0%, #000000 100%);
+  color: #e0f7fa;
+  font-family: 'Share Tech Mono', monospace;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.05em;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 950px;
+  margin: 3rem auto;
+  padding: 2.5rem 3rem;
+  background: #111111ee;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #ff1744aa;
+  border: 1px solid #ff1744;
+  backdrop-filter: blur(6px);
+}
+
+h1 {
+  color: #ff1744;
+  text-shadow: 0 0 8px #ff1744cc;
+}
+
+h2 {
+  color: #00e676;
+  text-shadow: 0 0 6px #00e676aa;
+  margin-top: 2rem;
+}
+
+h3 {
+  color: #29b6f6;
+  text-shadow: 0 0 6px #29b6f6aa;
+  margin-top: 1.5rem;
+}
+
+p, li {
+  line-height: 1.6;
+  color: #b2ebf2;
+}
+
+ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+a {
+  color: #00e5ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  color: #ff1744;
+  text-shadow: 0 0 6px #ff1744aa;
+  text-decoration: underline;
+}
+
+pre, code {
+  font-family: 'Share Tech Mono', monospace;
+  background-color: #0d1b24;
+  color: #00ffc3;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  display: block;
+  margin-top: 0.5rem;
+  box-shadow: inset 0 0 8px #00ffc355;
+}
+
+footer {
+  margin-top: 4rem;
+  font-size: 0.9rem;
+  color: #aaaaaa;
+  text-align: center;
+  text-shadow: 0 0 5px #00e5ff55;
+}

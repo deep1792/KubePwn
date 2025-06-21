@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RCE - Kubepwn</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Remote Code Execution (RCE)</h1>
+    <form method="get">
+      <label for="cmd">Enter Command:</label><br />
+      <input type="text" name="cmd" id="cmd" size="80" /><br /><br />
+      <button type="submit">Execute</button>
+    </form>
+    {% if result %}
+    <h2>Output:</h2>
+    <pre>{{ result }}</pre>
+    {% endif %}
+    <p><a href="/">Back to Home</a></p>
+  </div>
+</body>
+</html>
