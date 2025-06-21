@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SSTI - Kubepwn</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+  <h1>Server-Side Template Injection (SSTI)</h1>
+  <form method="post">
+    <label for="template">Enter Template Payload:</label><br />
+    <input type="text" name="template" id="template" size="80" /><br /><br />
+    <button type="submit">Render</button>
+  </form>
+  <p><a href="/">Back to Home</a></p>
+</div>
+</body>
+</html>

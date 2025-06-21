@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kubepwn ⚔️ | Kubernetes Red Team Lab</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .typewriter-text {
+      display: inline-block;
+      border-right: 0.15em solid #00e676;
+      white-space: nowrap;
+      overflow: hidden;
+      letter-spacing: 0.15em;
+      font-size: 1.4rem;
+      animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #00e676; }
+    }
+
+    .diagram {
+      width: 80%;
+      max-width: 850px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+      margin: 1.5rem auto 0;
+      display: block;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #00e676;
+      color: #000000;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-decoration: none;
+      margin-top: 2rem;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #00c853;
+      box-shadow: 0 0 8px #00e676aa;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1 style="text-align:center;">Kubepwn ⚔️</h1>
+
+    <h2 style="text-align:center; margin-top: 1rem;">
+      <span id="typewriter" class="typewriter-text"></span>
+    </h2>
+
+    <!-- Section: Attack Chain -->
+    <div class="section">
+      <h2>🧠 Full Attack Chain Overview</h2>
+      <p>This red team lab simulates a full Kubernetes compromise — from vulnerable web app to full cluster takeover. The flow below demonstrates each attack stage visually.</p>
+      <img src="{{ url_for('static', filename='images/Cyber-kill-chain.png') }}" alt="Attack Flow Diagram" class="diagram" />
+    </div>
+
+    <!-- Section: MITRE Mapping -->
+    <div class="section">
+      <h2>🎯 MITRE ATT&CK for Containers</h2>
+      <p>Each exploitation step maps to real-world tactics and techniques from the MITRE ATT&CK for Containers matrix. Use this mapping to correlate detection and defense strategies.</p>
+      <img src="{{ url_for('static', filename='images/kubepwn-mitre-mapping.png') }}" alt="MITRE ATT&CK Matrix Mapping" class="diagram" />
+    </div>
+
+    <!-- Section: Launch -->
+    <div class="section" style="text-align: center;">
+      <h2>🚀 Ready to Launch the Lab?</h2>
+      <p>Deploy the lab on your Kubernetes cluster and begin your offensive simulation journey.</p>
+      <a href="{{ url_for('instructions') }}" class="cta-button">Launch Kubepwn</a>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 <strong>Kubepwn</strong> · Built for Ethical Hacking and Education</p>
+      <p>Created by <strong>Deepanshu Khanna</strong> 🛡️</p>
+    </footer>
+  </div>
+
+  <script>
+    const text = "The Ultimate Kubernetes Pwn Lab — Hack. Exploit. Own.";
+    const el = document.getElementById("typewriter");
+
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 75);
+      } else {
+        setTimeout(() => {
+          el.textContent = "";
+          i = 0;
+          type();
+        }, 2000); // Pause before restarting
+      }
+    }
+
+    type();
+  </script>
+</body>
+</html>
