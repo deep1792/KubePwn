@@ -116,8 +116,13 @@ Created with ❤️ by Deepanshu Khanna
 This project is licensed under the [MIT License](LICENSE).
 
 ## Support This Project via UPI 🇮🇳
+
 If you find **Kubepwn** useful and want to support its development, you can send a payment via UPI:
+
 **UPI ID:** "alivejatt@oksbi"
+
+
 Or scan the QR code below using any UPI app (Google Pay, PhonePe, Paytm, etc.):
 ![UPI QR Code](https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=alivejatt@oksbi&size=200x200)
+
 [![Pay via UPI](https://img.shields.io/badge/Pay%20via-UPI-blue?style=for-the-badge&logo=google-pay)](upi://pay?pa=alivejatt@oksbi&pn=Kubepwn+Support&cu=INR)
