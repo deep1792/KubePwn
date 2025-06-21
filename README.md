@@ -20,15 +20,12 @@ Kubepwn provides:
 > ⚠️ For educational and research use only. Never deploy in production environments.
 
 🧩 Lab Architecture
-- kind (Kubernetes in Docker)
-  - kubepwn namespace
-    - kubepwn Pod (privileged)
-      - Mounted host root filesystem (/)
-      - Mounted containerd.sock
-      - Flask app running on port 8080
- 
-* Service Exposure: NodePort → 'localhost:8080'
-* Cluster Tooling: containerd + optional 'nerdctl'
+    - kind (Kubernetes in Docker)
+      - kubepwn namespace
+        - kubepwn Pod (privileged)
+          - Mounted host root filesystem (/)
+          - Mounted containerd.sock
+          - Flask app running on port 8080
 
  💣 Attack Vectors
 | Exploit                               | Route                  | Description                                     |
@@ -39,16 +36,18 @@ Kubepwn provides:
 | Insecure File Upload                  | '/upload'              | Upload and access arbitrary files               |
 | Privilege Escalation                  | '/priv-esc'            | Escalate using mounted Docker/Containerd socket |
 
- 📦 File Structure
-Kubepwn/
-├── app.py                   # Flask web application
-├── deploy.py                # Deployment helper (optional)
-├── Dockerfile               # Builds kubepwn-app image
-├── kind-config.yaml         # Kind cluster configuration
-├── kubepwn-app.yaml         # Kubernetes deployment/service manifest
-├── static/                  # Static assets (CSS, images)
-├── templates/               # Jinja2 HTML templates
-└── README.md                # This file
+📦 File Structure
+      Kubepwn/
+      ├── app.py # Flask web application
+      ├── deploy.py # Deployment helper (optional)
+      ├── Dockerfile # Builds kubepwn-app image
+      ├── kind-config.yaml # Kind cluster configuration
+      ├── kubepwn-app.yaml # Kubernetes deployment/service manifest
+      ├── static/ # Static assets (CSS, images)
+      ├── templates/ # Jinja2 HTML templates
+      └── README.md # This file
+
+
 
  ⚙️ Installation
 # 1. Clone the repository
