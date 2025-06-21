@@ -54,47 +54,47 @@ Kubepwn provides:
 
  ⚙️ Installation
 # 1. Clone the repository
-git clone https://github.com/yourusername/kubepwn.git
-cd kubepwn
+        git clone https://github.com/yourusername/kubepwn.git
+        cd kubepwn
 
 # 2. Pre-requisites
         >= python3.10
 
 # Install kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-chmod +x kubectl
-sudo mv kubectl /usr/local/bin/
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
 
 # Install kind
-sudo apt update
-curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
-chmod +x kind
-sudo mv kind /usr/local/bin/
-sudo apt install docker.io docker-cli docker-compose 
-sudo systemctl enable docker
-sudo systemctl start docker
-sudo usermod -aG docker $USER
-sudo systemctl stop docker 
-sudo systemctl start docker
-sudo systemctl status docker
+        sudo apt update
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+        chmod +x kind
+        sudo mv kind /usr/local/bin/
+        sudo apt install docker.io docker-cli docker-compose 
+        sudo systemctl enable docker
+        sudo systemctl start docker
+        sudo usermod -aG docker $USER
+        sudo systemctl stop docker 
+        sudo systemctl start docker
+        sudo systemctl status docker
 
 # 3. Deploy the lab
-python3 deploy.py
+        python3 deploy.py
 
 # 4. Access the Lab
-Navigate to: [http://localhost:8080](http://localhost:8080)
+        Navigate to: [http://localhost:8080](http://localhost:8080)
 
 
  🎯 MITRE ATT\&CK Mapping
 Kubepwn aligns its techniques to the MITRE ATT\&CK for Containers framework.
-| Tactic               | Technique                                 |
-| -------------------- | ----------------------------------------- |
-| Initial Access       | Exploit Public-Facing Application (T1190) |
-| Execution            | Command and Scripting Interpreter (T1059) |
-| Privilege Escalation | Escape to Host (T1611)                    |
-| Discovery            | System Information Discovery (T1082)      |
-| Lateral Movement     | Kubernetes Exec into Container (T1609)    |
-| Collection           | Data from Local System (T1005)            |
+        | Tactic               | Technique                                 |
+        | -------------------- | ----------------------------------------- |
+        | Initial Access       | Exploit Public-Facing Application (T1190) |
+        | Execution            | Command and Scripting Interpreter (T1059) |
+        | Privilege Escalation | Escape to Host (T1611)                    |
+        | Discovery            | System Information Discovery (T1082)      |
+        | Lateral Movement     | Kubernetes Exec into Container (T1609)    |
+        | Collection           | Data from Local System (T1005)            |
 
 Visual diagrams for both MITRE mapping and the cyber kill chain are available in the UI.
 
