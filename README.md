@@ -12,7 +12,7 @@ Kubepwn is a deliberately vulnerable Kubernetes lab environment designed for red
 📌 Overview
 Kubepwn provides:
 - A Flask-based vulnerable web application
-- Multiple attack surfaces (RCE, SSTI, SSRF, File Upload, Privilege Escalation)
+- Multiple attack surfaces
 - Host-mounted container with 'privileged' access
 - Realistic infrastructure using Kubernetes constructs
 - Visual aids for MITRE ATT&CK and cyber kill chain
