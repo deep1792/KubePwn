@@ -27,14 +27,20 @@ Kubepwn provides:
         ├── Mounted containerd.sock
         └── Flask app running on port 8080
 
- 💣 Entry Points
-| Exploit                               | Route                  | Description                                     |
-| ------------------------------------- | ---------------------- | ----------------------------------------------- |
-| Remote Code Execution                 | '/rce?cmd=whoami'      | Run system commands via Flask injection         |
-| Server-Side Template Injection (SSTI) | '/ssti'                | Inject Jinja2 template expressions              |
-| Server-Side Request Forgery (SSRF)    | '/ssrf'	         | Forge HTTP requests from the backend server     |
-| Insecure File Upload                  | '/upload'              | Upload and access arbitrary files               |
-| Privilege Escalation                  | 'via reverse-shell'    | Escalate using mounted Docker/Containerd socket |
+ 💣 Attack Vectors
+| Exploit                                   | Route / Trigger      | Description                                                                  |
+| ----------------------------------------- | -------------------- | ---------------------------------------------------------------------------- |
+| **Remote Code Execution (RCE)**           | `/rce`               | Execute arbitrary system commands via `subprocess` with unsanitized input.   |
+| **Server-Side Template Injection**        | `/template`          | Exploit Jinja2 to run code via unsanitized user template input.              |
+| **Server-Side Request Forgery (SSRF)**    | `/ssrf?url=...`      | Trigger backend server to request arbitrary internal/external URLs.          |
+| **Insecure File Upload**                  | `/upload`            | Upload arbitrary files without validation, enabling script/webshell attacks. |
+| **LLM Prompt Injection**                  | `/chatbot`           | Simulate prompt injection by manipulating chatbot instructions.              |
+| **Sensitive Keys in Codebase**            | `/secrets`           | Exposes hardcoded secrets via insecure Python import (`secretdata.creds`).   |
+| **Reverse Shell + Privilege Escalation**  | `/rce` with payload  | Obtain a reverse shell and escalate privileges using                         |
+| **Insecure File Download**                | `/download?file=...` | Path traversal via unsanitized download requests (`send_file` abuse).        |
+| **Open Redirect**                         | `/redirect?url=...`  | Redirects user to unvalidated external links (phishing/social engineering).  |
+| **Kubernetes Enumeration (Post-Exploit)** | via reverse shell    | Enumerate container/host/K8s environment to pivot or escalate access.        |
+
 
 ### 📦 File Structure
       Kubepwn/
