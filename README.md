@@ -85,16 +85,16 @@ Kubepwn provides:
         Navigate to: [http://localhost:8080](http://localhost:8080)
 
 
- 🎯 MITRE ATT\&CK Mapping
-Kubepwn aligns its techniques to the MITRE ATT\&CK for Containers framework.
-        | Tactic               | Technique                                 |
-        | -------------------- | ----------------------------------------- |
-        | Initial Access       | Exploit Public-Facing Application (T1190) |
-        | Execution            | Command and Scripting Interpreter (T1059) |
-        | Privilege Escalation | Escape to Host (T1611)                    |
-        | Discovery            | System Information Discovery (T1082)      |
-        | Lateral Movement     | Kubernetes Exec into Container (T1609)    |
-        | Collection           | Data from Local System (T1005)            |
+### 🎯 MITRE ATT\&CK Mapping
+        Kubepwn aligns its techniques to the MITRE ATT\&CK for Containers framework.
+                | Tactic               | Technique                                 |
+                | -------------------- | ----------------------------------------- |
+                | Initial Access       | Exploit Public-Facing Application (T1190) |
+                | Execution            | Command and Scripting Interpreter (T1059) |
+                | Privilege Escalation | Escape to Host (T1611)                    |
+                | Discovery            | System Information Discovery (T1082)      |
+                | Lateral Movement     | Kubernetes Exec into Container (T1609)    |
+                | Collection           | Data from Local System (T1005)            |
 
 Visual diagrams for both MITRE mapping and the cyber kill chain are available in the UI.
 
