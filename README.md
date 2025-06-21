@@ -27,14 +27,14 @@ Kubepwn provides:
         ├── Mounted containerd.sock
         └── Flask app running on port 8080
 
- 💣 Attack Vectors
+ 💣 Entry Points
 | Exploit                               | Route                  | Description                                     |
 | ------------------------------------- | ---------------------- | ----------------------------------------------- |
 | Remote Code Execution                 | '/rce?cmd=whoami'      | Run system commands via Flask injection         |
 | Server-Side Template Injection (SSTI) | '/ssti'                | Inject Jinja2 template expressions              |
-| Server-Side Request Forgery (SSRF)    | '/ssrf'				         | Forge HTTP requests from the backend server     |
+| Server-Side Request Forgery (SSRF)    | '/ssrf'	         | Forge HTTP requests from the backend server     |
 | Insecure File Upload                  | '/upload'              | Upload and access arbitrary files               |
-| Privilege Escalation                  | '/priv-esc'            | Escalate using mounted Docker/Containerd socket |
+| Privilege Escalation                  | 'via reverse-shell'    | Escalate using mounted Docker/Containerd socket |
 
 ### 📦 File Structure
       Kubepwn/
@@ -46,7 +46,6 @@ Kubepwn provides:
       ├── static/ # Static assets (CSS, images)
       ├── templates/ # Jinja2 HTML templates
       └── README.md # This file
-
 
 
  ⚙️ Installation
