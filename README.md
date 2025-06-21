@@ -19,16 +19,14 @@ Kubepwn provides:
 
 > ⚠️ For educational and research use only. Never deploy in production environments.
 
- 🧩 Lab Architecture
-### 🧩 Lab Architecture
+🧩 Lab Architecture
 - kind (Kubernetes in Docker)
   - kubepwn namespace
     - kubepwn Pod (privileged)
       - Mounted host root filesystem (/)
       - Mounted containerd.sock
       - Flask app running on port 8080
-
-
+ 
 * Service Exposure: NodePort → 'localhost:8080'
 * Cluster Tooling: containerd + optional 'nerdctl'
 
