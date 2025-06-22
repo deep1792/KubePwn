@@ -117,9 +117,9 @@ Created with ❤️ by Deepanshu Khanna
  📝 License
 This project is licensed under the [MIT License](LICENSE).
 
-## Support This Project via UPI 🇮🇳
+## Support This Project
 
-If you find **Kubepwn** useful and want to support its development, you can send a payment via UPI:
+If you find **Kubepwn** useful and want to support its development, you can buy me a coffee:
 
 **UPI ID:** "alivejatt@oksbi"
 
