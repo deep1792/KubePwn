@@ -1,5 +1,5 @@
 # ⚔️ Kubepwn – The Ultimate Kubernetes Red-Team Lab — Hack. Exploit. Own. like a Pro!!!
-        📡 APT-Style Attack Simulations (🔴 Offensive) and 🎯Hunt & Detect Like a Pro Threat Hunter🕵️‍♂️
+        📡 APT-Style Attack Simulations (🔴 Offensive) and 🎯Hunt & Detect Like a Pro Threat Hunter (🕵️‍♂️ Defensive)
 
 Kubepwn is a deliberately vulnerable Kubernetes lab environment designed for red teamers, penetration testers, and security researchers to simulate real-world attacks in a controlled, isolated cluster. It demonstrates the full kill chain — from web application exploitation to container breakout and potential node-level compromise — all within a local 'kind' cluster.
 
