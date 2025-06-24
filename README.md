@@ -24,11 +24,16 @@ Kubepwn provides:
 - 🏗️ Realistic infrastructure using Kubernetes constructs
 - 🛰️ Visual aids for MITRE ATT&CK and Cyber Kill Chain
 
+
 > ⚠️ For educational and research use only. Never deploy in production environments.
 
+
 🛡️ Integrated Detection & Forensics Stack (🟢 Defensive)
+
 ⚙️ New! Full Detection Stack Integration
+
 Kubepwn now integrates a production-grade detection and monitoring suite, combining open-source observability tools:
+
         |   Tool   |                   Purpose                       |
         | ---------| ----------------------------------------------- |
         | Falco    | Runtime threat detection for container activity |
