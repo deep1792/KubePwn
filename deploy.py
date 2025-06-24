@@ -1,6 +1,5 @@
 import os
 import subprocess
-import shutil
 
 def run_cmd(cmd, exit_on_fail=True):
     print(f"\n$ {cmd}")
@@ -26,62 +25,130 @@ def banner():
 |   | '_\.''  :  `--'   \   | '/ :'   |  / |:   : :   \   \   ' \ ||   | |--'          
 '   : |    :  ,      .-./   :    ||   :    ||   | :    \   \  |--" |   |/              
 ;   |,'     `--`----'   /    \  /  \   \  / `---'.|     \   \ |    '---'               
-'---'                   `-'----'    `----'    `---`      '---"                 
+'---'                   `-'----'    `----'    `---`      '---"                         
 
-                        An Intentional Offensive Red-Team Lab
-                            Created by: Deepanshu Khanna  
+          Kubepwn: Kubernetes Red Team Lab — Hack. Exploit. Own.
+                 Created by: Deepanshu Khanna  
     """)
 
 def setup_apache_php():
     print("\n[*] Ensuring Apache and PHP are installed...")
     run_cmd("sudo apt update")
     run_cmd("sudo apt install apache2 php libapache2-mod-php -y")
-
-    print("[*] Creating upload directory for webshells...")
-    upload_path = "/var/www/html/uploads"
-
-    # Use sudo to make and chmod the folder
-    run_cmd(f"sudo mkdir -p {upload_path}")
-    run_cmd(f"sudo chmod -R 777 {upload_path}")
-
-    print("[*] Restarting Apache server...")
+    run_cmd("sudo mkdir -p /var/www/html/uploads && sudo chmod -R 777 /var/www/html/uploads")
     run_cmd("sudo systemctl restart apache2")
+    print("[+] Webshells accessible via http://localhost/uploads/<filename>.php")
 
-    print("[+] Apache is ready. Webshells will execute via: http://localhost/uploads/<filename>.php")
+def install_prerequisites():
+    print("\n[*] Installing Docker, Kind, and kubectl...")
 
-def setup_kubepwn():
-    print("\n[*] Starting Kubepwn Setup...")
+    # Docker
+    run_cmd("sudo apt install docker.io docker-cli docker-compose -y")
+    run_cmd("sudo systemctl enable docker && sudo systemctl start docker")
+    run_cmd("sudo usermod -aG docker $USER")
+
+    # Kind - install from official release if apt version not good
+    kind_installed = subprocess.run("which kind", shell=True, stdout=subprocess.DEVNULL).returncode == 0
+    if not kind_installed:
+        print("[*] Installing kind from official release")
+        run_cmd("curl -Lo kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/")
+    else:
+        print("[+] Kind already installed")
+
+    # kubectl - install via apt or official binary if needed
+    kubectl_installed = subprocess.run("which kubectl", shell=True, stdout=subprocess.DEVNULL).returncode == 0
+    if not kubectl_installed:
+        print("[*] Installing kubectl")
+        run_cmd("sudo apt install kubectl -y")
+    else:
+        print("[+] kubectl already installed")
+
+def setup_kubepwn_cluster():
+    print("\n[*] Building and deploying Kubepwn app...")
 
     if not os.path.exists("kubepwn-app.yaml"):
-        print("❌ Error: kubepwn-app.yaml not found.")
+        print("❌ kubepwn-app.yaml not found.")
         exit(1)
 
-    if not os.path.exists("/home/j0ck3r/Desktop/kubepwn/k8s_phase2"):
-        print("⚠️  Warning: Phase 2 manifests directory not found. Skipping those.")
-
-    print("[*] Building Docker image...")
     run_cmd("docker build -t kubepwn-app:latest .")
 
-    print("[*] Checking kind cluster...")
-    clusters = subprocess.check_output("kind get clusters", shell=True).decode().split()
+    clusters = subprocess.getoutput("kind get clusters").split()
     if "kubepwn" not in clusters:
-        print("🌀 Creating kind cluster...")
         run_cmd("kind create cluster --config kind-config.yaml --name kubepwn")
     else:
         print("✅ Kind cluster 'kubepwn' already exists.")
 
-    print("[*] Loading image into kind cluster...")
     run_cmd("kind load docker-image kubepwn-app:latest --name kubepwn")
-
-    print("[*] Deploying application...")
     run_cmd("kubectl apply -f kubepwn-app.yaml")
+
+def deploy_apt_attacks():
+    print("\n[*] Deploying APT-style attacks...")
+
+    run_cmd("kubectl apply -f lateral-movement.yaml")
+    run_cmd("kubectl apply -f daemonset-backdoor.yaml")
+
+def deploy_detection_stack():
+    print("\n[*] Setting up Falco + Loki + Grafana stack...")
+
+    # Pull images and load into kind cluster
+    images = [
+        "grafana/grafana:10.3.3",
+        "grafana/loki:2.6.1",
+        "grafana/promtail:2.9.3",
+        "quay.io/kiwigrid/k8s-sidecar:1.19.2"
+    ]
+    for image in images:
+        run_cmd(f"docker pull {image}")
+        run_cmd(f"kind load docker-image {image} --name kubepwn")
+
+    # Install Helm if not installed
+    helm_installed = subprocess.run("which helm", shell=True, stdout=subprocess.DEVNULL).returncode == 0
+    if not helm_installed:
+        print("[*] Installing Helm...")
+        run_cmd("curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash")
+    else:
+        print("[+] Helm already installed")
+
+    # Add repos and update
+    run_cmd("helm repo add falcosecurity https://falcosecurity.github.io/charts")
+    run_cmd("helm repo add grafana https://grafana.github.io/helm-charts")
+    run_cmd("helm repo update")
+
+    # Deploy Falco
+    run_cmd("helm upgrade --install falco falcosecurity/falco --namespace falco --create-namespace")
+
+    # Deploy Loki Stack (includes Grafana, Loki, and Promtail)
+    # Use your promtail-values.yaml file here for the promtail configuration
+    promtail_values_path = "promtail-values.yaml"
+    if not os.path.exists(promtail_values_path):
+        print(f"❌ {promtail_values_path} not found. Please create it before running this script.")
+        exit(1)
+
+    # The loki-stack includes loki, promtail, and grafana
+    run_cmd(
+        f"helm upgrade --install loki grafana/loki-stack "
+        f"--namespace monitoring --create-namespace "
+        f"--set grafana.enabled=true "
+        f"--set promtail.enabled=true "
+        f"-f {promtail_values_path}"
+    )
+
+    print("🔍 Grafana available at http://localhost:3000 ")
 
 def main():
     banner()
     setup_apache_php()
-    setup_kubepwn()
-    print("\n🚀 Kubepwn is live at: http://localhost:8080")
-    print("⚠️  For lab use only. Do not expose to public networks.\n")
+    install_prerequisites()
+    setup_kubepwn_cluster()
+    deploy_apt_attacks()
+    deploy_detection_stack()
+
+    print("\n Kubepwn is live at: http://localhost:8080")
+    print(" Monitor attacks at: http://localhost:3000\n")
+    print(" To forward the Grafana dashboard port run:")
+    print("  kubectl port-forward -n monitoring svc/loki-grafana 3000:80\n")
+    print(' To decode the Grafana admin password run:')
+    print('  kubectl get secret -n monitoring loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode && echo\n')
 
 if __name__ == "__main__":
     main()
