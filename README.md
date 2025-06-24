@@ -129,8 +129,8 @@ Kubepwn now integrates a production-grade detection and monitoring suite, combin
         | Grafana Dashboard      | [http://localhost:3000](http://localhost:3000)                |
         | Port Forward (Grafana) | `kubectl port-forward -n monitoring svc/loki-grafana 3000:80` |
 
-5. ###🔐 Decode Grafana Admin Password:
-           kubectl get secret -n monitoring loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode && echo
+### 🔐 Decode Grafana Admin Password: 
+        kubectl get secret -n monitoring loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode && echo
 
 ### 🎯 MITRE ATT\&CK Mapping
 
