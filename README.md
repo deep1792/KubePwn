@@ -1,4 +1,5 @@
 # ⚔️ Kubepwn – The Ultimate Kubernetes Red-Team Lab — Hack. Exploit. Own. like a Pro!!!
+        📡 APT-Style Attack Simulations (🔴 Offensive) and 🎯Hunt & Detect Like a Pro Threat Hunter🕵️‍♂️
 
 Kubepwn is a deliberately vulnerable Kubernetes lab environment designed for red teamers, penetration testers, and security researchers to simulate real-world attacks in a controlled, isolated cluster. It demonstrates the full kill chain — from web application exploitation to container breakout and potential node-level compromise — all within a local 'kind' cluster.
 
@@ -11,13 +12,30 @@ Kubepwn is a deliberately vulnerable Kubernetes lab environment designed for red
 
 📌 Overview
 Kubepwn provides:
-- A Flask-based vulnerable web application
-- Multiple attack surfaces
-- Host-mounted container with 'privileged' access
-- Realistic infrastructure using Kubernetes constructs
-- Visual aids for MITRE ATT&CK and cyber kill chain
+- 🧪 A Flask-based vulnerable web application
+- 🎯 Multiple attack surfaces
+- 🐳 Host-mounted container with 'privileged' access
+- 🔐 Host Mounts + containerd.sock exposure
+- 📡 Lateral Movement simulation via `ServiceAccount` token theft
+- 🐙 DaemonSet backdoor persistence
+- 🎯 MITRE ATT&CK + Cyber Kill Chain Mapping
+- 📈 Detection via Falco, Loki, and Grafana
+- 🧹 Cleanup script for easy teardown
+- 🏗️ Realistic infrastructure using Kubernetes constructs
+- 🛰️ Visual aids for MITRE ATT&CK and Cyber Kill Chain
 
 > ⚠️ For educational and research use only. Never deploy in production environments.
+
+🛡️ Integrated Detection & Forensics Stack (🟢 Defensive)
+⚙️ New! Full Detection Stack Integration
+Kubepwn now integrates a production-grade detection and monitoring suite, combining open-source observability tools:
+        |   Tool   |                   Purpose                       |
+        | ---------| ----------------------------------------------- |
+        | Falco    | Runtime threat detection for container activity |
+        | Grafana  | Visual dashboard for real-time alerting         |
+        | Loki     | Log aggregation for forensics & timeline        |
+        | Promtail | Log shipping from pods/nodes                    |
+
 
 ### 🧩 Lab Architecture
         kind (Kubernetes in Docker)
@@ -27,34 +45,43 @@ Kubepwn provides:
         ├── Mounted containerd.sock
         └── Flask app running on port 8080
 
- 💣 Attack Vectors
-| Exploit                                   | Route / Trigger      | Description                                                                  |
-| ----------------------------------------- | -------------------- | ---------------------------------------------------------------------------- |
-| **Remote Code Execution (RCE)**           | `/rce`               | Execute arbitrary system commands via `subprocess` with unsanitized input.   |
-| **Server-Side Template Injection**        | `/template`          | Exploit Jinja2 to run code via unsanitized user template input.              |
-| **Server-Side Request Forgery (SSRF)**    | `/ssrf?url=...`      | Trigger backend server to request arbitrary internal/external URLs.          |
-| **Insecure File Upload**                  | `/upload`            | Upload arbitrary files without validation, enabling script/webshell attacks. |
-| **Sensitive Keys in Codebase**            | `/secrets`           | Exposes hardcoded secrets via insecure Python import (`secretdata.creds`).   |
-| **Reverse Shell + Privilege Escalation**  | `/rce` with payload  | Obtain a reverse shell and escalate privileges using                         |
-| **Kubernetes Enumeration (Post-Exploit)** | via reverse shell    | Enumerate container/host/K8s environment to pivot or escalate access.        |
-| **Full Kubernetes compromise**            | via reverse shell    | compromise the full compromise after privilege escalation                    |
 
+---
 
-### 📦 File Structure
-      Kubepwn/
-      ├── app.py # Flask web application
-      ├── deploy.py # Deployment helper (optional)
-      ├── Dockerfile # Builds kubepwn-app image
-      ├── kind-config.yaml # Kind cluster configuration
-      ├── kubepwn-app.yaml # Kubernetes deployment/service manifest
-      ├── static/ # Static assets (CSS, images)
-      ├── templates/ # Jinja2 HTML templates
-      └── README.md # This file
+## 💣 Attack Vectors
+        
+        |           Exploit Type            |     Route/Vector         | Description                                                                |
+        | ----------------------------------| ----------------------- | --------------------------------------------------------------------------- |
+        | **RCE**                           | `/rce`                  | Arbitrary command execution via unsanitized `subprocess` call               |
+        | **SSTI**                          | `/template`             | Server-Side Template Injection in Jinja2                                    |
+        | **SSRF**                          | `/ssrf?url=...`         | SSRF attack to internal/external URLs                                       |
+        | **Insecure File Upload**          | `/upload`               | Uploads arbitrary files to `/var/www/html/uploads`                          |
+        | **Secrets Exposure**              | `/secrets`              | Hardcoded Python imports leak credentials                                   |
+        | **Reverse Shell + PrivEsc**       | `/rce` payload           | Shell access + host breakout with `privileged` pod                         |
+        | **Lateral Movement (APT style)**  | `lateral-movement.yaml` | SA token theft used to exec into other pods                                 |
+        | **DaemonSet Backdoor**            | `daemonset-backdoor.yaml`| Persistence via hidden DaemonSet shell backdoor                            |
+
+---
+
+## 📦 File Structure
+        Kubepwn/
+        ├── app.py # Vulnerable Flask app
+        ├── deploy.py # Automated deployment (lab + detection)
+        ├── cleanup.py # Teardown script
+        ├── kind-config.yaml # Kind cluster configuration
+        ├── kubepwn-app.yaml # App deployment + service
+        ├── daemonset-backdoor.yaml # DaemonSet backdoor persistence
+        ├── lateral-movement.yaml # Simulated lateral movement
+        ├── promtail-values.yaml # Promtail Helm values for logging
+        ├── Dockerfile
+        ├── static/
+        ├── templates/
+        └── README.md
 
 
  ⚙️ Installation
 # 1. Clone the repository
-        git clone https://github.com/yourusername/kubepwn.git
+        git clone https://github.com/deep1792/kubepwn.git
         cd kubepwn
 
 # 2. Pre-requisites
@@ -80,29 +107,48 @@ Kubepwn provides:
 
 # 3. Deploy the lab
         python3 deploy.py
+        
+        This sets up:
+        Flask vulnerable app
+        Kind cluster
+        DaemonSet backdoor + Lateral movement vectors
+        Apache for webshell access
+        Falco + Loki + Grafana stack via Helm
 
 # 4. Access the Lab
-        Navigate to: [http://localhost:8080](http://localhost:8080)
+        Navigate to: 
+        | Component              | URL                                                           |
+        | ---------------------- | ------------------------------------------------------------- |
+        | Kubepwn Lab            | [http://localhost:8080](http://localhost:8080)                |
+        | Uploaded Webshells     | [http://localhost/uploads/](http://localhost/uploads/)        |
+        | Grafana Dashboard      | [http://localhost:3000](http://localhost:3000)                |
+        | Port Forward (Grafana) | `kubectl port-forward -n monitoring svc/loki-grafana 3000:80` |
 
+5. ###🔐 Decode Grafana Admin Password:
+           kubectl get secret -n monitoring loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode && echo
 
 ### 🎯 MITRE ATT\&CK Mapping
+
         Kubepwn aligns its techniques to the MITRE ATT\&CK for Containers framework.
-                | Tactic               | Technique                                 |
-                | -------------------- | ----------------------------------------- |
-                | Initial Access       | Exploit Public-Facing Application (T1190) |
-                | Execution            | Command and Scripting Interpreter (T1059) |
-                | Privilege Escalation | Escape to Host (T1611)                    |
-                | Discovery            | System Information Discovery (T1082)      |
-                | Lateral Movement     | Kubernetes Exec into Container (T1609)    |
-                | Collection           | Data from Local System (T1005)            |
+        | Tactic               | Technique                                 |
+        | -------------------- | ----------------------------------------- |
+        | Initial Access       | T1190 - Exploit Public-Facing Application |
+        | Execution            | T1059 - Command and Scripting Interpreter |
+        | Privilege Escalation | T1611 - Escape to Host                    |
+        | Discovery            | T1082 - System Information Discovery      |
+        | Lateral Movement     | T1609 - Kubernetes Exec into Container    |
+        | Collection           | T1005 - Data from Local System            |
+        | Persistence          | T1499 - DaemonSet/Cluster-wide Implant    |
+
 
 Visual diagrams for both MITRE mapping and the cyber kill chain are available in the UI.
 
  📚 Learning Objectives
-* Understand common container and Kubernetes misconfigurations
-* Practice exploiting containers, clusters in a K8s
-* Simulate container breakout via privileged access
-* Map red team techniques to blue team detections
+        * 🧠 Understand Kubernetes misconfigurations
+        * 🔍 Practice real-world attack techniques
+        * 💥 Escape containers & compromise nodes
+        * 📊 Monitor and detect attacks using open-source tools
+        * ⚔️ Map attacks to MITRE ATT&CK for better blue team correlation
 
  🔐 Security Disclaimer
 Kubepwn is intentionally insecure and must only be used in isolated, local environments for learning and ethical research.
