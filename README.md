@@ -145,6 +145,36 @@ Kubepwn now integrates a production-grade detection and monitoring suite, combin
         | Collection           | T1005 - Data from Local System            |
         | Persistence          | T1499 - DaemonSet/Cluster-wide Implant    |
 
+<details> <summary><strong>🛡️ Integrated Detection & Forensics Stack (🟢 Defensive)</strong></summary>
+⚙️ Full Threat Detection Stack Integration (NEW!)
+Kubepwn now ships with a powerful detection + monitoring stack tailored for incident response and threat hunting in Kubernetes:
+
+        Tool	Role in Detection Workflow
+        Falco	Real-time runtime security monitoring (system calls, process, execve, file access)
+        Loki	Aggregates logs from Kubernetes pods (attack timeline, IOC correlation)
+        Grafana	Visualizes logs, detection alerts, dashboards, metrics
+        Promtail	Collects and ships pod logs to Loki
+
+📊 Example Dashboards in Grafana:
+
+        Real-Time Attack Timelines
+        
+        Falco Syscall Alerts (e.g., reverse shell, container escape)
+        
+        Suspicious Container Behaviors (e.g., bash, nc, curl inside a pod)
+
+🧪 Example Detection Scenarios:
+
+        ATTACK	DETECTED BY	FALCO RULE TRIGGERED
+        RCE via Flask /rce	Falco + Logs (Loki)	Process spawned in container
+        Lateral Movement	Falco + Loki	kubectl exec or suspicious SA token
+        DaemonSet Backdoor	Falco	Hidden container deployment
+        File Upload + Web Shell	Loki logs	Unusual file created
+
+🔐 How to Access:
+        📺 Grafana: http://localhost:3000 (Login: admin, password via kubectl get secret)
+        📜 View Falco alerts: kubectl logs -n falco <falco-pod-name>
+</details>
 
 Visual diagrams for both MITRE mapping and the cyber kill chain are available in the UI.
 
