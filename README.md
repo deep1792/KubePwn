@@ -145,9 +145,10 @@ Kubepwn now integrates a production-grade detection and monitoring suite, combin
         | Collection           | T1005 - Data from Local System            |
         | Persistence          | T1499 - DaemonSet/Cluster-wide Implant    |
 
-🛡️ Integrated Detection & Forensics Stack (🟢 Defensive)</strong></summary>
-⚙️ Full Threat Detection Stack Integration (NEW!)
-Kubepwn now ships with a powerful detection + monitoring stack tailored for incident response and threat hunting in Kubernetes:
+🛡️ Integrated Detection & Forensics Stack (🟢 Defensive)
+
+        ⚙️ Full Threat Detection Stack Integration (NEW!)
+        Kubepwn now ships with a powerful detection + monitoring stack tailored for incident response and threat             hunting in Kubernetes:
 
         Tool	Role in Detection Workflow
         Falco	Real-time runtime security monitoring (system calls, process, execve, file access)
