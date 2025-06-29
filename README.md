@@ -78,6 +78,9 @@ Kubepwn now integrates a production-grade detection and monitoring suite, combin
         ├── daemonset-backdoor.yaml # DaemonSet backdoor persistence
         ├── lateral-movement.yaml # Simulated lateral movement
         ├── promtail-values.yaml # Promtail Helm values for logging
+        ├── lateral-movement.yaml
+        ├── daemonset-backdoor.yaml
+        └── dind-vuln.yaml        👈 NEW
         ├── Dockerfile
         ├── static/
         ├── templates/
