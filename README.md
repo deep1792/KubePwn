@@ -173,6 +173,7 @@ Kubepwn now integrates a production-grade detection and monitoring suite, combin
         File Upload + Web Shell	Loki logs	Unusual file created
 
 🔐 How to Access:
+
         📺 Grafana: http://localhost:3000 (Login: admin, password via kubectl get secret)
         📜 View Falco alerts: kubectl logs -n falco <falco-pod-name>
 
@@ -180,6 +181,7 @@ Kubepwn now integrates a production-grade detection and monitoring suite, combin
 Visual diagrams for both MITRE mapping and the cyber kill chain are available in the UI.
 
  📚 Learning Objectives
+ 
         * 🧠 Understand Kubernetes misconfigurations
         * 🔍 Practice real-world attack techniques
         * 💥 Escape containers & compromise nodes
@@ -187,10 +189,11 @@ Visual diagrams for both MITRE mapping and the cyber kill chain are available in
         * ⚔️ Map attacks to MITRE ATT&CK for better blue team correlation
 
  🔐 Security Disclaimer
-Kubepwn is intentionally insecure and must only be used in isolated, local environments for learning and ethical research.
+     
+        Kubepwn is intentionally insecure and must only be used in isolated, local environments for learning and              ethical research.
 
-* Do not expose to public or production clusters.
-* Creator holds no liability for misuse or damage caused.
+        * Do not expose to public or production clusters.
+        * Creator holds no liability for misuse or damage caused.
 
  👨‍💻 Author
 Created with ❤️ by Deepanshu Khanna
