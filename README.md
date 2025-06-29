@@ -145,7 +145,7 @@ Kubepwn now integrates a production-grade detection and monitoring suite, combin
         | Collection           | T1005 - Data from Local System            |
         | Persistence          | T1499 - DaemonSet/Cluster-wide Implant    |
 
-<details> <summary><strong>🛡️ Integrated Detection & Forensics Stack (🟢 Defensive)</strong></summary>
+🛡️ Integrated Detection & Forensics Stack (🟢 Defensive)</strong></summary>
 ⚙️ Full Threat Detection Stack Integration (NEW!)
 Kubepwn now ships with a powerful detection + monitoring stack tailored for incident response and threat hunting in Kubernetes:
 
@@ -174,7 +174,7 @@ Kubepwn now ships with a powerful detection + monitoring stack tailored for inci
 🔐 How to Access:
         📺 Grafana: http://localhost:3000 (Login: admin, password via kubectl get secret)
         📜 View Falco alerts: kubectl logs -n falco <falco-pod-name>
-</details>
+
 
 Visual diagrams for both MITRE mapping and the cyber kill chain are available in the UI.
 
