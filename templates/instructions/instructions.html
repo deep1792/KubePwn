@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Launch Instructions | Kubepwn ⚔️</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deploy Instructions | Kubepwn ⚔️</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
     body {
       background: radial-gradient(ellipse at top, #0c0c0e 0%, #000000 100%);
       color: #e0f7fa;
@@ -42,16 +44,8 @@
       display: block;
       margin-top: 0.5rem;
       box-shadow: inset 0 0 8px #00ffc355;
-    }
-    .dir-structure {
-      background-color: #000;
-      color: #8be9fd;
-      padding: 1rem;
-      border-left: 5px solid #00e676;
-      font-size: 0.95rem;
-      margin-top: 1rem;
-      border-radius: 8px;
-      white-space: pre;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
     }
     .tip {
       background: #1e1e2f;
@@ -61,11 +55,33 @@
       border-radius: 8px;
       color: #ffcdd2;
     }
-    footer {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #aaaaaa;
-      margin-top: 4rem;
+
+    /* Stylish list */
+    ul.features-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 1rem;
+    }
+    ul.features-list li {
+      margin-bottom: 2.2rem;
+      font-size: 1.05rem;
+      color: #ccefff;
+      background: #141414cc;
+      padding: 1.1rem 1.4rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #00e5ff66;
+      line-height: 1.5;
+      transition: box-shadow 0.3s ease;
+    }
+    ul.features-list li:hover {
+      box-shadow: 0 0 25px #00e5ffcc;
+    }
+    ul.features-list li strong {
+      display: block;
+      font-size: 1.25rem;
+      color: #00e5ff;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 6px #00e5ffbb;
     }
   </style>
 </head>
@@ -75,42 +91,80 @@
 
     <p>Kubepwn is a fully-featured Kubernetes Red Team simulation environment. Follow the steps below to launch your lab.</p>
 
-    <h2>📁 Directory Structure</h2>
-    <div class="dir-structure">
-Kubepwn
-├── app.py
-├── deploy.py
-├── Dockerfile
-├── kind-config.yaml
-├── kubepwn-app.yaml
-├── README.md
-├── static/
-└── templates/
+    <h2>📁 Kubepwn Directory Structure</h2>
+    <pre>
+kubepwn/
+├── app.py                  # Flask app main
+├── deploy.py               # Lab deployment script
+├── Dockerfile              # Docker image build file
+├── kind-config.yaml        # Kind cluster config
+├── kubepwn-app.yaml        # Kubernetes manifests
+├── README.md               # Project documentation
+├── bonus/                  # Bonus yamls and scripts
+│   ├── backdoor.yaml
+│   ├── dind-vuln.yaml
+│   ├── dind-safe.yaml
+│   ├── git-leak.yaml
+│   ├── lateral-movement.yaml
+│   ├── metadata_app.py
+│   ├── metadata-db.yaml
+│   ├── rbac-misconfigurations.yaml
+│   └── ssrf.yaml
+├── cleanup.py              # Cleanup helper script
+├── falco-dind-rule.yaml    # Falco detection rules
+├── kind-linux-amd64        # Kind binary
+├── promtail-values.yaml    # Loki promtail config
+├── static/                 # CSS, JS, images
+└── templates/              # HTML templates
+    ├── index.html
+    ├── instructions.html
+    ├── about.html
+    ├── credits.html
+    ├── gallery.html
+    ├── attack-chain.html
+    └── demo.html
+    </pre>
 
-    </div>
-
-    <h2>⚙️ Lab Deployment</h2>
+    <h2>⚙️ Lab Deployment Steps</h2>
     <ol>
-      <li>Ensure Kind, kubectl, Docker & Python 3 are installed on your system.</li>
-      <li>Run the deploy script:</li>
+      <li>Ensure Kind, kubectl, Docker &amp; Python 3 are installed.</li>
+      <li>Run the deploy script from the root directory:</li>
     </ol>
     <pre><code>python3 deploy.py</code></pre>
 
     <div class="tip">
-      💡 <strong>Note:</strong> The script sets up your Kubernetes cluster using <code>kind</code>, applies manifests, and exposes the vulnerable web app on <code>http://localhost:8080</code> or <code>NodePort 30080</code>.
+      💡 <strong>Note:</strong> This script sets up a Kubernetes cluster using <code>kind</code>, applies manifests, and exposes the vulnerable app on <code>http://localhost:8080</code> or <code>NodePort 30080</code>.
     </div>
 
-    <h2>🧠 What's Inside?</h2>
-    <ul>
-      <li>Multiple vulnerabilities including RCE, SSRF, SSTI, and File Upload</li>
-      <li>Post-exploitation stages like privilege escalation, persistence, data exfiltration</li>
-      <li>Cluster-wide compromise simulation</li>
-      <li>Full MITRE ATT&CK mapping</li>
+    <h2>🧠 What’s Included?</h2>
+    <ul class="features-list">
+      <li>
+        ⚠️ <strong>Web Application Vulnerabilities:</strong>
+        Exploitable OWASP-10 vulnerabilities like SSRF, RCE, SSTI, Git Secrets Leakage, and metadata exposure—<br>
+        mirroring real-world misconfigured production apps.
+      </li>
+
+      <li>
+        🧠 <strong>Post-Exploitation Arsenal:</strong>
+        Simulated privilege escalation via container breakout, token theft, and secret harvesting.<br>
+        Includes lateral movement through compromised service accounts and hidden backdoors via DaemonSets.
+      </li>
+
+      <li>
+        🧩 <strong>Advanced Threat Chain Simulation:</strong>
+        Fully aligned with the MITRE ATT&CK framework and Cyber Kill Chain—from Initial Access to Actions on Objectives—<br>
+        with mapped Kubernetes-specific TTPs.
+      </li>
+
+      <li>
+        🔍 <strong>Detection & Threat Hunting:</strong>
+        Real-time telemetry via Falco (rules for crypto miners, reverse shells, and suspicious binaries),<br>
+        Loki (forensic logs), and Grafana dashboards for visualizing attack footprints.
+      </li>
     </ul>
 
     <footer>
-      <p>&copy; 2025 <strong>Kubepwn</strong> · Red Team Lab for Kubernetes</p>
-      <p>Created by <strong>Deepanshu Khanna</strong> 🛡️</p>
+      <p>© 2025 <strong>Kubepwn</strong> | Built by Deepanshu Khanna 🛡️</p>
     </footer>
   </div>
 </body>
