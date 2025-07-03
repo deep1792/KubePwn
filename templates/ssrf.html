@@ -8,17 +8,21 @@
 </head>
 <body>
   <div class="container">
-    <h1>Server-Side Request Forgery (SSRF)</h1>
+    <h1>Server-Side Request Forgery (SSRF) - Kubepwn</h1>
+
     <form method="get">
-      <label for="url">Enter URL to Fetch:</label><br />
-      <input type="text" name="url" id="url" size="80" /><br /><br />
+      <label for="url">Enter URL to Fetch:</label>
+      <input type="text" name="url" id="url" placeholder="http://127.0.0.1:5000/metadata-db" />
+
       <button type="submit">Send Request</button>
     </form>
+
     {% if response %}
-    <h2>Response:</h2>
-    <pre>{{ response }}</pre>
+      <h2>Response:</h2>
+      <pre>{{ response }}</pre>
     {% endif %}
-    <p><a href="/">Back to Home</a></p>
+
+    <p><a href="/">← Back to Home</a></p>
   </div>
 </body>
 </html>
