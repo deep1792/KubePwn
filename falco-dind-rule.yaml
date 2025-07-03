@@ -1,0 +1,10 @@
+# falco-dind-rule.yaml
+- rule: DIND Exploitation - Docker Socket Access
+  desc: Detect access to the Docker socket from inside containers (DIND abuse)
+  condition: >
+    container and fd.name contains "/var/run/docker.sock"
+  output: >
+    🚨 [DIND Exploit] Docker socket access detected by container (possible privilege escalation) 
+    container=%container.name image=%container.image.repository command=%proc.cmdline user=%user.name
+  priority: CRITICAL
+  tags: [container, docker, privilege_escalation]

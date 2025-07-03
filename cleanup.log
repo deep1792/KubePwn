@@ -1,0 +1,11 @@
+[INFO] 🚮 Starting cleanup of Helm releases, namespaces, and Kind cluster...
+[INFO] $ helm uninstall falco -n falco || true
+[INFO] $ kubectl delete namespace falco
+[INFO] $ helm uninstall loki -n monitoring || true
+[INFO] $ kubectl delete namespace monitoring
+[INFO] $ kubectl delete namespace kubepwn
+[INFO] 🧨 Deleting Kind cluster 'kubepwn'...
+[INFO] $ kind delete cluster --name kubepwn
+[INFO] 🧼 Pruning Docker volumes and unused data...
+[INFO] $ docker system prune -a --volumes -f
+[INFO] ✅ Cleanup complete. You can now rerun deploy.py for a fresh start.
