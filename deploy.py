@@ -29,7 +29,7 @@ def banner():
 
           Kubepwn: Kubernetes Red Team & Blue Lab — Hack. Exploit. Own. & Detect.
                  Created by: Deepanshu Khanna  
-                 License: MIT
+                 License: Not for resale or commercial hosting 
     """)
 
 def setup_apache_php():
