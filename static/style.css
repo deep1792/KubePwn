@@ -1,81 +1,155 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
+/* Core Layout */
 body {
-  background: radial-gradient(ellipse at top, #0c0c0e 0%, #000000 100%);
-  color: #e0f7fa;
-  font-family: 'Share Tech Mono', monospace;
+  background-color: #0b0c10;
+  color: #e0e0e0;
+  font-family: 'Fira Code', monospace;
   margin: 0;
   padding: 0;
-  letter-spacing: 0.05em;
-  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 .container {
-  max-width: 950px;
-  margin: 3rem auto;
-  padding: 2.5rem 3rem;
-  background: #111111ee;
-  border-radius: 12px;
-  box-shadow: 0 0 20px #ff1744aa;
-  border: 1px solid #ff1744;
-  backdrop-filter: blur(6px);
+  max-width: 1080px;
+  margin: auto;
+  padding: 2rem;
 }
 
-h1 {
-  color: #ff1744;
-  text-shadow: 0 0 8px #ff1744cc;
-}
-
-h2 {
+/* Headings */
+h1, h2, h3 {
   color: #00e676;
-  text-shadow: 0 0 6px #00e676aa;
-  margin-top: 2rem;
+  text-shadow: 0 0 8px #00e67688;
 }
 
-h3 {
-  color: #29b6f6;
-  text-shadow: 0 0 6px #29b6f6aa;
-  margin-top: 1.5rem;
+/* Sections */
+.section {
+  padding: 2rem 1rem;
+  margin: 3rem 0;
+  background-color: #111218;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 170, 0.1);
+  text-align: center;
 }
 
-p, li {
-  line-height: 1.6;
-  color: #b2ebf2;
+/* Typewriter Effect */
+.typewriter-text {
+  font-size: 1.4rem;
+  border-right: 0.15em solid #00e676;
+  white-space: nowrap;
+  overflow: hidden;
+  letter-spacing: 0.1em;
+  animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
 }
 
-ul {
-  padding-left: 1.5rem;
-  margin-bottom: 1.5rem;
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
 }
 
-a {
-  color: #00e5ff;
-  text-decoration: none;
-  font-weight: 600;
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #00e676; }
 }
 
-a:hover {
-  color: #ff1744;
-  text-shadow: 0 0 6px #ff1744aa;
-  text-decoration: underline;
-}
-
-pre, code {
-  font-family: 'Share Tech Mono', monospace;
-  background-color: #0d1b24;
-  color: #00ffc3;
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
-  overflow-x: auto;
+/* Diagrams */
+.diagram {
+  width: 90%;
+  max-width: 960px;
+  border-radius: 14px;
+  margin: 2rem auto;
   display: block;
-  margin-top: 0.5rem;
-  box-shadow: inset 0 0 8px #00ffc355;
+  border: 1px solid #00e6e6;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
 }
 
+/* Call-to-action */
+.cta-button {
+  background: linear-gradient(to right, #00e676, #1de9b6);
+  color: #000;
+  padding: 0.9rem 2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  transition: 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 0 12px #00e67677;
+}
+
+.cta-button:hover {
+  background: linear-gradient(to right, #00c853, #00e5ff);
+  box-shadow: 0 0 18px #00e676aa;
+  transform: scale(1.03);
+}
+
+/* Global Button Styling (Updated) */
+.btn {
+  display: inline-block;
+  background: linear-gradient(145deg, #00e676, #1de9b6);
+  color: #000;
+  padding: 0.85rem 1.8rem;
+  margin: 0.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow:
+    0 6px 14px rgba(0, 255, 170, 0.3),
+    inset 0 -2px 4px rgba(255, 255, 255, 0.1);
+  transition: all 0.25s ease-in-out;
+  position: relative;
+  top: 0;
+}
+
+.btn:hover,
+.btn:focus {
+  background: linear-gradient(145deg, #00c853, #00e5ff);
+  color: #000;
+  box-shadow:
+    0 8px 20px rgba(0, 255, 170, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Buttons Group (Preserved) */
+.button-group {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.button-group .btn {
+  width: auto;
+}
+
+/* Footer */
 footer {
+  text-align: center;
+  padding: 1.5rem;
   margin-top: 4rem;
   font-size: 0.9rem;
-  color: #aaaaaa;
-  text-align: center;
-  text-shadow: 0 0 5px #00e5ff55;
+  background: #0f1117;
+  color: #888;
+  border-top: 1px solid #222;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .diagram {
+    width: 95%;
+  }
+  .cta-button {
+    width: 80%;
+  }
+  .button-group .btn,
+  .btn {
+    width: 80%;
+    margin: 0.5rem auto;
+    display: block;
+  }
 }
