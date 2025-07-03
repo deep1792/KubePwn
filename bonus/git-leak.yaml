@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-leak-files
+data:
+  index.html: |
+    Welcome to our leaked Git repo!
+    <!-- FLAG -->
+    k8s-goat-51bc78332065561b0c99280f62510bcc
+  git-config: |
+    [core]
+      repositoryformatversion = 0
+      filemode = true
+      bare = false
+      logallrefupdates = true
+  git-credentials: |
+    [user]
+      name = admin
+      email = admin@example.com
+    [credential]
+      helper = store
+    [secrets]
+      aws_access_key_id = AKIVSHD6243H22G1KIDC
+      aws_secret_access_key = cgGn4+gDgnriogn4g+34ig4bg34g44gg4Dox7c1M
+      azure_subscription_id = d1dbdb42-2e43-4f53-94f2-66d8b71ed315
+      azure_client_secret = F@keSuperS3cretKeyForAzure2025
+  git-head: |
+    ref: refs/heads/main
+  objects-info: |
+    # empty placeholder for objects/info
+  objects-pack: |
+    # empty placeholder for objects/pack
+  default.conf: |
+    server {
+      listen 80;
+      location / {
+        root /usr/share/nginx/html;
+        index index.html;
+        try_files $uri $uri/ =404;
+      }
+      location ~ /\.git {
+        root /usr/share/nginx/html;
+        autoindex on;
+        allow all;
+      }
+    }
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: git-leak
+  labels:
+    app: git-leak
+spec:
+  containers:
+  - name: web
+    image: nginx:alpine
+    ports:
+    - containerPort: 80
+    command: ["/bin/sh"]
+    args:
+      - -c
+      - |
+        mkdir -p /usr/share/nginx/html/.git/refs/heads && \
+        mkdir -p /usr/share/nginx/html/.git/objects/info && \
+        mkdir -p /usr/share/nginx/html/.git/objects/pack && \
+        echo "ref: refs/heads/main" > /usr/share/nginx/html/.git/HEAD && \
+        echo "dummy content" > /usr/share/nginx/html/.git/refs/heads/main && \
+        cp /config/git-config /usr/share/nginx/html/.git/config && \
+        cp /config/git-credentials /usr/share/nginx/html/.git/credentials && \
+        cp /config/index.html /usr/share/nginx/html/index.html && \
+        cp /config/objects-info /usr/share/nginx/html/.git/objects/info/placeholder && \
+        cp /config/objects-pack /usr/share/nginx/html/.git/objects/pack/placeholder && \
+        exec nginx -g 'daemon off;'
+    volumeMounts:
+    - name: web-content
+      mountPath: /usr/share/nginx/html
+    - name: config-volume
+      mountPath: /config
+      readOnly: true
+  volumes:
+  - name: web-content
+    emptyDir: {}
+  - name: config-volume
+    configMap:
+      name: git-leak-files
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-leak-service
+spec:
+  type: NodePort
+  selector:
+    app: git-leak
+  ports:
+  - protocol: TCP
+    port: 80
+    nodePort: 31230

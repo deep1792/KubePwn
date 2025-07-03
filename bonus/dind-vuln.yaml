@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dind-vulnerable
+  labels:
+    app: dind
+spec:
+  hostPID: true
+  containers:
+    - name: dind
+      image: docker:20.10-dind
+      securityContext:
+        privileged: true  # Needed to launch dockerd
+      volumeMounts:
+        - name: docker-graph-storage
+          mountPath: /var/lib/docker  # Persistent storage for DIND
+  volumes:
+    - name: docker-graph-storage
+      emptyDir: {}  # ephemeral in-memory storage
