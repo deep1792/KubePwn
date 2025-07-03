@@ -6,6 +6,14 @@
   <title>Kubepwn ⚔️ | Kubernetes Red Team Lab</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
+    body {
+      background-color: #0b0c10;
+      color: #ffffff;
+      font-family: 'Fira Code', monospace;
+      margin: 0;
+      padding: 0;
+    }
+
     .typewriter-text {
       display: inline-block;
       border-right: 0.15em solid #00e676;
@@ -27,12 +35,17 @@
     }
 
     .diagram {
-      width: 80%;
-      max-width: 850px;
+      width: 90%;
+      max-width: 980px;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
-      margin: 1.5rem auto 0;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.25);
+      margin: 2rem auto;
       display: block;
+    }
+
+    .section {
+      padding: 1rem 2rem;
+      text-align: center;
     }
 
     .cta-button {
@@ -51,6 +64,15 @@
       background-color: #00c853;
       box-shadow: 0 0 8px #00e676aa;
     }
+
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      padding: 1rem;
+      background: #111218;
+      font-size: 0.9rem;
+      color: #888;
+    }
   </style>
 </head>
 
@@ -63,35 +85,42 @@
       <span id="typewriter" class="typewriter-text"></span>
     </h2>
 
-    <!-- Section: Attack Chain -->
+
+    <!-- Section: Kubernetes Cluster Attack Overview -->
     <div class="section">
-      <h2>🧠 Full Attack Chain Overview</h2>
-      <p>This red team lab simulates a full Kubernetes compromise — from vulnerable web app to full cluster takeover. The flow below demonstrates each attack stage visually.</p>
-      <img src="{{ url_for('static', filename='images/Cyber-kill-chain.png') }}" alt="Attack Flow Diagram" class="diagram" />
+      <h2>Kubernetes Cluster Compromise Flow</h2>
+      <p>This cluster diagram visualizes attack techniques like DaemonSet abuse (T1612), privilege escalation (T1528), and volume access (T1070.008) within your Kubernetes lab.</p>
+      <img src="{{ url_for('static', filename='images/kubernetes-cluster-mitre.png') }}" alt="Kubernetes Cluster MITRE Mapping" class="diagram" />
     </div>
 
-    <!-- Section: MITRE Mapping -->
+
+    <!-- Section: Cyber Kill Chain -->
     <div class="section">
-      <h2>🎯 MITRE ATT&CK for Containers</h2>
-      <p>Each exploitation step maps to real-world tactics and techniques from the MITRE ATT&CK for Containers matrix. Use this mapping to correlate detection and defense strategies.</p>
-      <img src="{{ url_for('static', filename='images/kubepwn-mitre-mapping.png') }}" alt="MITRE ATT&CK Matrix Mapping" class="diagram" />
+      <h2> Cyber Kill Chain</h2>
+      <p>This flow maps each phase of the Cyber Kill Chain to real-world MITRE ATT&CK techniques — helping defenders visualize how attackers progress through Kubernetes environments.</p>
+      <img src="{{ url_for('static', filename='images/cyber-kill-chain-mitre.png') }}" alt="Cyber Kill Chain MITRE Mapping" class="diagram" />
     </div>
 
     <!-- Section: Launch -->
     <div class="section" style="text-align: center;">
-      <h2>🚀 Ready to Launch the Lab?</h2>
-      <p>Deploy the lab on your Kubernetes cluster and begin your offensive simulation journey.</p>
-      <a href="{{ url_for('instructions') }}" class="cta-button">Launch Kubepwn</a>
+      <h2>Ready to Launch the Lab?</h2>
+      <p>Deploy the full Kubepwn lab and begin your red and blue team journey with container attacks, persistence, and real-time detection using Falco, Loki, and Grafana.</p>
+      <a href="{{ url_for('instructions') }}" class="btn">🚀 Launch Instructions</a>
+      <a href="{{ url_for('about') }}" class="btn">ℹ️ About</a>
+      <a href="{{ url_for('attack_chain') }}" class="btn">⚔️ Attack Chain</a>
+
+    </div>
+
     </div>
 
     <footer>
-      <p>&copy; 2025 <strong>Kubepwn</strong> · Built for Ethical Hacking and Education</p>
+      <p>&copy; 2025 <strong>Kubepwn</strong> · Kubernetes Offensive Lab for Red Teamers & Defenders</p>
       <p>Created by <strong>Deepanshu Khanna</strong> 🛡️</p>
     </footer>
   </div>
 
   <script>
-    const text = "The Ultimate Kubernetes Pwn Lab — Hack. Exploit. Own.";
+    const text = "The Ultimate Kubernetes Pwn Lab — Hack. Exploit. Own. Detect.";
     const el = document.getElementById("typewriter");
 
     let i = 0;
