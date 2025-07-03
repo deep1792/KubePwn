@@ -169,12 +169,12 @@
 
 ## ❗ License & Usage
 
-        📝 Licensed under Creative Commons Attribution-NonCommercial 4.0 International License. https://creativecommons.org/licenses/by-nc/4.0/ 
-        This project is intended for educational and research purposes only.
+        📝 Licensed under [Creative Commons Attribution-NonCommercial 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).
+        📚 This project is intended for **educational and research purposes only**.
+
 
 > **Kubepwn is NOT licensed for resale or commercial hosting.**
-> It is free to use for personal, academic, research, and internal enterprise learning purposes only.
-
+> It is free to use for personal, academic, research, and for learning purposes only.
         * 🔓 You **can** fork, modify, and use for workshops or internal demos.
         * 💰 You **cannot** sell, SaaS, or redistribute this lab commercially.
         * ☣️ Never deploy Kubepwn in a production or internet-facing environment.
