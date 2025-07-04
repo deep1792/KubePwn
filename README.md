@@ -11,6 +11,8 @@
 
 ---
 
+![Alt text](https://github.com/deep1792/KubePwn/blob/main/static/images/banner.png)
+
 ## 📌 What is Kubepwn?
 
 **Kubepwn** is a purpose-built, deliberately vulnerable Kubernetes lab for advanced adversarial simulation, post-exploitation, and blue team detection engineering — **all within a local kind (Kubernetes in Docker) cluster**.
