@@ -11,7 +11,7 @@
 
 ---
 
-![Alt text](https://github.com/deep1792/KubePwn/blob/main/static/images/banner.png)
+![Alt text](https://github.com/deep1792/KubePwn/blob/main/static/images/banner-final.png)
 
 ## 📌 What is Kubepwn?
 
