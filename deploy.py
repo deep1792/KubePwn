@@ -91,6 +91,9 @@ def deploy_metadata_db():
     # Load image into kind cluster
     run_cmd("kind load docker-image metadata-db:latest --name kubepwn")
 
+    #Load the docker-compose
+    run_cmd("docker-compose up --build -d")
+
 def deploy_apt_attacks():
     print("\n[*] Deploying APT-style attacks...")
 
