@@ -2,6 +2,7 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
+# Install required tools and Docker CLI
 RUN apt-get update && \
     apt-get install -y \
         curl \
@@ -21,14 +22,23 @@ RUN apt-get update && \
     apt-get install -y docker-ce-cli containerd && \
     rm -rf /var/lib/apt/lists/*
 
+# Install nerdctl (optional)
 RUN curl -sSL https://github.com/containerd/nerdctl/releases/download/v1.7.4/nerdctl-1.7.4-linux-amd64.tar.gz | tar -xz -C /usr/local/bin
 
+# Copy source code
 COPY . /app
 
-RUN pip install flask requests
+# Ensure upload folder exists inside container
+RUN mkdir -p /var/www/html/uploads && chmod 777 /var/www/html/uploads
 
+# Install Python dependencies
+RUN pip install --no-cache-dir flask requests
+
+# Set environment variables
 ENV FLASK_APP=app.py
 
+# Expose app port
 EXPOSE 8080
 
+# Run the Flask app
 CMD ["flask", "run", "--host=0.0.0.0", "--port=8080"]
