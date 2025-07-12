@@ -1,0 +1,9 @@
+- rule: SSRF or Internal Service Scanning
+  desc: Detect curl or wget to internal services (e.g., metadata-db)
+  condition: >
+    spawned_process and proc.name in (curl, wget) and
+    proc.args contains ".svc.cluster.local"
+  output: >
+     [SSRF] Internal service access attempt via %proc.name: %proc.cmdline (container=%container.name)
+  priority: MEDIUM
+  tags: [ssrf, redteam, discovery]
