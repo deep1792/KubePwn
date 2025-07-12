@@ -1,0 +1,8 @@
+- rule: Kubectl Execution from Pod
+  desc: Detect use of kubectl binary inside containers (usually lateral movement)
+  condition: >
+    spawned_process and proc.name = "kubectl"
+  output: >
+      [Lateral Move] kubectl used inside container: %proc.cmdline (container=%container.name user=%user.name)
+  priority: CRITICAL
+  tags: [lateral_movement, kubectl, k8s]
