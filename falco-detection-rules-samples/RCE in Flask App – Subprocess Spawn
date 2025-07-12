@@ -1,0 +1,10 @@
+- rule: RCE via Flask - Suspicious Subprocess
+  desc: Detect child process execution from Flask app (possible RCE)
+  condition: >
+    container and
+    container.image.repository contains "kubepwn" and
+    spawned_process and proc.name in (bash, sh, python, perl) and proc.pname in ("gunicorn", "flask")
+  output: >
+       [Flask RCE] Command execution via Flask: %proc.cmdline (container=%container.name user=%user.name)
+  priority: HIGH
+  tags: [rce, flask, web, redteam]
