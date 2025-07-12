@@ -210,5 +210,5 @@ If you love **Kubepwn**, then buy me a coffee:
 
 ## 🧷 Note
 
-        Kubepwn is for **ethical, educational, and research** purposes only.
+        Kubepwn is for **ethical, educational, and research** purposes only. "All vulnerabilities in this lab are intentional. Do not test these techniques against           systems without explicit permission."
         Use responsibly. Abuse = 🚫 permanent ban from the internet (just kidding... or not).
