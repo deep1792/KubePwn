@@ -193,11 +193,11 @@
 
 ## ☕ Support the Project
         
-        If you found this useful, buy me a coffee 💙
+If you found this useful, buy me a coffee 💙
         
-        ![UPI QR Code](https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=alivejatt@oksbi\&size=200x200)
+![UPI QR Code](https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=alivejatt@oksbi\&size=200x200)
         
-        [![UPI](https://img.shields.io/badge/Buy%20Me%20Coffee-UPI-blue?style=for-the-badge\&logo=google-pay)](upi://pay?pa=alivejatt@oksbi&pn=Kubepwn+Support&cu=INR)
+[![UPI](https://img.shields.io/badge/Buy%20Me%20Coffee-UPI-blue?style=for-the-badge\&logo=google-pay)](upi://pay?pa=alivejatt@oksbi&pn=Kubepwn+Support&cu=INR)
 
 ---
 
