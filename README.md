@@ -61,7 +61,9 @@
         | Git Repo Leak            | `.git` exposed directory | Credential leak via dumped Git repo                       |
         | Container Escape         | privileged pod + hostPath| Escape to host with `chroot /host` or `containerd.sock`   |
         | Lateral Movement         | SA token abuse           | Use pod token to list secrets, exec into other pods       |
-        | DaemonSet Backdoor       | DaemonSet implant         | Full-cluster persistence with shell & reverse shell      |
+        | DaemonSet Backdoor       | DaemonSet implant        | Full-cluster persistence with shell & reverse shell       |
+        | Service Mesh Exploit     | Permissive mTLS          | Deploy malicious pod and transmit secrets/payment CC/DC   |
+                                                                        to attacker's environment                         |
 
 ---
 
