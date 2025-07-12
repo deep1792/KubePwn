@@ -206,6 +206,3 @@ If you found this useful, buy me a coffee 💙
         Kubepwn is for **educational and research** use only.
         Test responsibly.
         Don't be that person. ☠️
-
-```
-
