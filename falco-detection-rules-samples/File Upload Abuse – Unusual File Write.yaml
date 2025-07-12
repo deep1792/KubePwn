@@ -1,0 +1,8 @@
+- rule: Webshell or File Upload Detected
+  desc: Detect file write to upload directory (webshell/file abuse)
+  condition: >
+    write and fd.name contains "/uploads"
+  output: >
+       [File Upload] File write to /uploads detected: %fd.name by %proc.cmdline (container=%container.name)
+  priority: HIGH
+  tags: [file_upload, web, redteam]
