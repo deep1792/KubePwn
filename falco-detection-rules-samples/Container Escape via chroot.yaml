@@ -1,0 +1,8 @@
+- rule: Container Escape Attempt - chroot
+  desc: Detect use of chroot to access host from container
+  condition: >
+    spawned_process and proc.name = "chroot"
+  output: >
+        [Escape Attempt] chroot used (potential container breakout): %proc.cmdline
+  priority: CRITICAL
+  tags: [privilege_escalation, escape, container]
