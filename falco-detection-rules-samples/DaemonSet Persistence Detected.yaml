@@ -1,0 +1,9 @@
+- rule: Suspicious DaemonSet with Shell
+  desc: Detect containers deployed as part of DaemonSet with a reverse shell
+  condition: >
+    container and k8s.kind="DaemonSet" and
+    spawned_process and proc.name in (bash, sh, nc, netcat)
+  output: >
+       [DaemonSet Backdoor] Shell process inside DaemonSet: %proc.cmdline (container=%container.name)
+  priority: CRITICAL
+  tags: [persistence, daemonset, k8s, redteam]
