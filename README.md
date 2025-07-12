@@ -21,7 +21,7 @@
 
         - ✅ Simulate real-world APT tactics & misconfigurations  
         - ✅ Map attacks to **MITRE ATT&CK** + **Cyber Kill Chain**  
-        - ✅ Practice **container escape**, **privilege escalation**, **lateral movement**, **persistence**  
+        - ✅ Practice real-world *K8s miscofigurations**, **privilege escalations**, **lateral movement**, **persistence**  
         - ✅ Detect threats with **Falco + Loki + Grafana dashboards**  
 
 ---
