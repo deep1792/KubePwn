@@ -108,9 +108,7 @@ def deploy_apt_attacks():
     # Install Istio
     run_cmd("curl -L https://istio.io/downloadIstio | sh -")
     run_cmd("./istio-*/bin/istioctl install -y")
-    run_cmd("kubectl label ns kubepwn prod istio-injection=enabled")
     run_cmd("kubectl apply -f bonus/service-mesh-exploit/")
-
 
 def deploy_detection_stack():
     print("\n[*] Setting up Falco + Loki + Grafana stack...")
