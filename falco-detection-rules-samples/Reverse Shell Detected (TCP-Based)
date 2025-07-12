@@ -1,0 +1,10 @@
+- rule: Reverse Shell Spawned via TCP
+  desc: Detect interactive reverse shells over TCP (bash, sh, nc, python, etc.)
+  condition: >
+    spawned_process and
+    (proc.name in (bash, sh, nc, netcat, curl, wget, python, perl)) and
+    (proc.args contains "/dev/tcp/" or proc.args contains "socket" or proc.args contains "connect")
+  output: >
+       [Reverse Shell] Suspicious reverse shell attempt: %proc.cmdline (user=%user.name container=%container.name)
+  priority: CRITICAL
+  tags: [reverse_shell, redteam, container]
