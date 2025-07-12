@@ -82,6 +82,7 @@ def setup_kubepwn_cluster():
     run_cmd("kind load docker-image kubepwn-app:latest --name kubepwn")
     run_cmd("kubectl apply -f kubepwn-app.yaml")
 
+
 def deploy_metadata_db():
     print("\n[*] Building and deploying metadata-db service...")
 
@@ -103,7 +104,13 @@ def deploy_apt_attacks():
     run_cmd("kubectl apply -f bonus/rbac-misconfigurations.yaml")
     run_cmd("kubectl apply -f bonus/git-leak.yaml")
     run_cmd("kubectl apply -f bonus/ssrf.yaml")
-    run_cmd("kubectl apply -f bonus/metadata-db.yaml")    
+    run_cmd("kubectl apply -f bonus/metadata-db.yaml")
+    # Install Istio
+    run_cmd("curl -L https://istio.io/downloadIstio | sh -")
+    run_cmd("./istio-*/bin/istioctl install -y")
+    run_cmd("kubectl label ns kubepwn prod istio-injection=enabled")
+    run_cmd("kubectl apply -f bonus/service-mesh-exploit/")
+
 
 def deploy_detection_stack():
     print("\n[*] Setting up Falco + Loki + Grafana stack...")
