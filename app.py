@@ -1,127 +1,92 @@
-from flask import Flask, request, render_template, render_template_string, redirect, url_for, flash, send_from_directory
-import subprocess
-import requests
-import os
-from werkzeug.utils import secure_filename
-import urllib3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About | Kubepwn ⚔ Red Team Lab</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0e0e0e;
+      color: #f4f4f4;
+    }
+    header {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 2px solid #ff4b4b;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: #ff4b4b;
+    }
+    nav {
+      margin-top: 0.5rem;
+    }
+    nav a {
+      margin: 0 10px;
+      color: #ffffffcc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #00ffe1;
+    }
+    main {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    h2 {
+      color: #00ffe1;
+    }
+    p {
+      line-height: 1.6;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #1a1a1a;
+      border-top: 2px solid #ff4b4b;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
 
-# Disable insecure request warnings from requests (for Kubernetes API calls with verify=False)
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+  <main>
+    <section>
+      <h2>🔍 MITRE ATT&CK Framework</h2>
+      <p>
+        MITRE ATT&CK is a curated knowledge base of adversary tactics and techniques derived from real-world cyber intrusions. Kubepwn utilizes this framework to simulate attacks across multiple stages of the ATT&CK matrix, covering techniques like container escape, credential dumping, lateral movement via service account tokens, and persistence via Kubernetes-native resources.
+      </p>
+    </section>
 
-app = Flask(__name__)
-app.secret_key = 'kubepwn_secret_key'
+    <section>
+      <h2>💣 Cyber Kill Chain (CKC)</h2>
+      <p>
+        Originally developed by Lockheed Martin, the Cyber Kill Chain outlines the stages of an attack from reconnaissance to data exfiltration. Kubepwn maps each lab phase to CKC stages—providing defenders a guided lens into real-world attacker behavior across Kubernetes-native environments.
+      </p>
+    </section>
 
-UPLOAD_FOLDER = '/var/www/html/uploads'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    <section>
+      <h2>🧠 How Kubepwn Merges ATT&CK + CKC</h2>
+      <p>
+        Kubepwn is not just a lab—it’s a full offensive simulation environment. Each red team stage is aligned to both ATT&CK TTPs and CKC phases. Whether it’s <strong>privilege escalation via RBAC misconfigurations</strong> or <strong>persistence using DaemonSets</strong>, every technique is traceable and detectable using Falco, Loki, and Grafana. Ideal for threat hunters, red teamers, and Kubernetes defenders.
+      </p>
+      <p>
+        🎯 <em>Goal: To blur the line between attacker and defender learning by providing a hands-on, offensive-defense hybrid.</em>
+      </p>
+    </section>
+  </main>
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+  <footer>
+    <p>© 2025 <strong>Kubepwn</strong> | Built with 💻 by Deepanshu Khanna</p>
+  </footer>
 
-
-@app.route("/instructions")
-def instructions():
-    return render_template("instructions/instructions.html")
-
-@app.route('/about')
-def about():
-    return render_template('about/about.html')
-
-
-
-@app.route('/attack-chain')
-def attack_chain():
-    return render_template('attack-chain/attack-chain.html')
-
-
-
-# --- Remote Code Execution (RCE) ---
-@app.route('/rce', methods=['GET'])
-def rce():
-    cmd = request.args.get('cmd')
-    result = None
-    if cmd:
-        try:
-            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            stdout, stderr = process.communicate(timeout=5)
-            result = stdout.decode() + stderr.decode()
-        except subprocess.TimeoutExpired:
-            result = "Command timed out"
-        except Exception as e:
-            result = f"Error: {e}"
-    return render_template('rce.html', result=result)
-
-
-
-# --- Server Side Template Injection (SSTI) ---
-@app.route('/ssti', methods=['GET', 'POST'])
-def ssti():
-    if request.method == 'POST':
-        template = request.form.get('template')
-    else:
-        template = request.args.get('template')
-
-    if template:
-        try:
-            return render_template_string(template)
-        except Exception as e:
-            return f"Template error: {e}", 400
-
-    return render_template('ssti.html')
-
-
-# --- Server Side Request Forgery (SSRF) ---
-@app.route("/ssrf")
-def ssrf():
-    url = request.args.get("url")
-    try:
-        r = requests.get(url, timeout=3)
-        return render_template("ssrf.html", response=r.text)
-    except Exception as e:
-        return render_template("ssrf.html", response=f"Error: {e}")
-
-
-
-# --- File Upload ---
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        f = request.files['file']
-        if f.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        filename = secure_filename(f.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        f.save(filepath)
-        flash(f'File uploaded to {filepath}')
-        return redirect(url_for('upload'))
-    return render_template('upload.html')
-
-
-# --- Serve uploaded files ---
-@app.route('/uploads/<path:filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
-# --- Privilege Escalation demo ---
-@app.route('/priv-esc')
-def priv_esc():
-    checks = []
-    checks.append("Checking Docker socket: " + ("FOUND" if os.path.exists("/var/run/docker.sock") else "NOT FOUND"))
-    try:
-        out = subprocess.getoutput("docker ps")
-        checks.append("Docker access check:\n" + out)
-    except Exception as e:
-        checks.append(f"Docker error: {e}")
-    return "<pre>" + "\n\n".join(checks) + "</pre>"
-
-
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+</body>
+</html>
