@@ -105,9 +105,28 @@ def deploy_apt_attacks():
     run_cmd("kubectl apply -f bonus/git-leak.yaml")
     run_cmd("kubectl apply -f bonus/ssrf.yaml")
     run_cmd("kubectl apply -f bonus/metadata-db.yaml")
-    # Install Istio
-    run_cmd("curl -L https://istio.io/downloadIstio | sh -")
-    run_cmd("./istio-*/bin/istioctl install -y")
+    
+     # Install Istio safely into /tmp
+    print("[*] Installing Istio...")
+
+    tmp_dir = "/tmp/istio-download"
+    run_cmd(f"rm -rf {tmp_dir} && mkdir -p {tmp_dir}")
+
+    # Download Istio
+    run_cmd(f"cd {tmp_dir} && curl -L https://istio.io/downloadIstio | sh -")
+
+    # Find extracted directory
+    istio_dir = subprocess.getoutput(f"ls -d {tmp_dir}/istio-*").strip()
+    if not istio_dir or 'istio-' not in istio_dir:
+        print("❌ Failed to locate Istio folder!")
+        exit(1)
+
+    istioctl = f"{istio_dir}/bin/istioctl"
+
+    # Install istioctl
+    run_cmd(f"{istioctl} install -y")
+
+    # Apply mesh exploit labs
     run_cmd("kubectl apply -f bonus/service-mesh-exploit/")
 
 def deploy_detection_stack():
